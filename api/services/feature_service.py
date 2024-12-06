@@ -69,14 +69,15 @@ class SystemFeatureModel(BaseModel):
 class FeatureService:
     @classmethod
     def get_features(cls, tenant_id: str) -> FeatureModel:
-        features = FeatureModel()
-
-        cls._fulfill_params_from_env(features)
-
-        if dify_config.BILLING_ENABLED:
-            cls._fulfill_params_from_billing_api(features, tenant_id)
-
-        return features
+    features = FeatureModel()
+    
+    # Configuração ilimitada
+    features.members.limit = -1  # Sem limite
+    features.apps.limit = -1  # Sem limite
+    features.vector_space.limit = -1  # Sem limite
+    features.documents_upload_quota.limit = -1  # Sem limite
+    
+    return features
 
     @classmethod
     def get_system_features(cls) -> SystemFeatureModel:
