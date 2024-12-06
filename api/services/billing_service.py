@@ -12,11 +12,30 @@ class BillingService:
 
     @classmethod
     def get_info(cls, tenant_id: str):
-        params = {"tenant_id": tenant_id}
-
-        billing_info = cls._send_request("GET", "/subscription/info", params=params)
-
-        return billing_info
+        # Retornar dados simulados com limites ilimitados
+        return {
+            "enabled": True,
+            "subscription": {
+                "plan": "unlimited",
+                "interval": "monthly"
+            },
+            "members": {
+                "size": 0,
+                "limit": -1  # Sem limite
+            },
+            "apps": {
+                "size": 0,
+                "limit": -1  # Sem limite
+            },
+            "vector_space": {
+                "size": 0,
+                "limit": -1  # Sem limite
+            },
+            "documents_upload_quota": {
+                "size": 0,
+                "limit": -1  # Sem limite
+            }
+        }
 
     @classmethod
     def get_subscription(cls, plan: str, interval: str, prefilled_email: str = "", tenant_id: str = ""):
